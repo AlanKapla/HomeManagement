@@ -24,11 +24,9 @@ namespace HomeManagement.Api.Controllers
         [Route("get/{id}")]
         public async Task<IActionResult> GetHomeMemberDetails(int id)
         {
-            object result = null;
-
             try
             {
-                result = await _mediator.Send(new GetHomeMemberQuery() { Id = id });
+                var result = await _mediator.Send(new GetHomeMemberQuery() { Id = id });
                 return result switch
                 {
                     null => NotFound($"Home Member with id: {id} not exist"),
@@ -39,19 +37,15 @@ namespace HomeManagement.Api.Controllers
             {
                 return BadRequest();
             }
-
-            
         }
 
         [HttpGet]
         [Route("getAll")]
         public async Task<IActionResult> GetHomeMembers()
         {
-            object result = null;
-
             try
             {
-                result = await _mediator.Send(new GetHomeMembersQuery());
+                var result = await _mediator.Send(new GetHomeMembersQuery());
                 return result switch
                 {
                     null => NotFound($"Home Members not exist"),
@@ -62,38 +56,30 @@ namespace HomeManagement.Api.Controllers
             {
                 return BadRequest();
             }
-
-            
         }
 
         [HttpPost]
         [Route("add")]
         public async Task<IActionResult> AddHomeMembers([FromBody] AddHomeMemberCommand addHomeMemberCommand)
         {
-            object result = null;
-
             try
             {
-                result = await _mediator.Send(addHomeMemberCommand);
+                var result = await _mediator.Send(addHomeMemberCommand);
                 return Ok(result);
             }
             catch (ArgumentException)
             {
                 return BadRequest();
             }
-
-            
         }
 
         [HttpDelete]
         [Route("delete/{id}")]
         public async Task<IActionResult> DeleteHomeMembers(int id)
         {
-            object homeMember = null;
-
             try
             {
-                homeMember = await _mediator.Send(new GetHomeMemberQuery() { Id = id });
+                var homeMember = await _mediator.Send(new GetHomeMemberQuery() { Id = id });
 
                 return homeMember switch
                 {
@@ -105,8 +91,6 @@ namespace HomeManagement.Api.Controllers
             {
                 return BadRequest();
             }
-
-            
         }
     }
 }
